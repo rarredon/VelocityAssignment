@@ -1,0 +1,14 @@
+<!doctype html>
+<head>
+  <title>Feature Requests</title>
+  <link rel=stylesheet type=text/css 
+	href="{{ url_for('static', filename='style.css')}}">
+  <script type="text/javascript"> //![CDATA[
+    {% block script %}{% endblock %}
+    // ]]>
+  </script>
+</head>
+<div class=page>
+<h1>{% block header %}{% endblock %}</h1>
+{% block body %}{% endblock %}
+</div>

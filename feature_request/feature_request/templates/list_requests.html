@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block header %}Feature Requests{% endblock %}
+{% block body %}
+<div class=create>
+  Don't see your feature requested here? Don't fret, just
+  <a href={{ url_for('create_request') }}> create a new request</a>!
+<div>
+<br>
+Current feature requests:
+<ul class=requests>
+{% for title, client, target, priority in requests %}
+<li> {{ " %-40s| Requested by: %-10s| Target date: %s | Priority %d" % (title, client, target, priority) }}
+{% else %}
+    <li>There are currently no requests for features.
+{% endfor %}
+</ul>
+{% endblock %}

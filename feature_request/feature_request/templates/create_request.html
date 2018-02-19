@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block script %}
+function updatePriors(){
+  var selected = document.getElementById("client");
+  var value = selected[selected.selectedIndex].value;
+  var priorSelect = document.getElementById("priority");
+  {% for id in priors %}
+    {% set new_prior = priors[id]|length + 1 %}
+    if (value == {{ id }}){
+      priorSelect.innerHTML = "{% for prior, title in priors[id] %} <option value={{ prior }}> {{ prior }}: {{ title }}  </option> + {% endfor %} <option value={{ new_prior }}> {{ new_prior }} -- New priority </option>";
+    }
+  {% endfor %}
+}
+{% endblock %}
+{% block header %}Create New Feature Request{% endblock %}
+{% block body %}
+<form action="{{ url_for('create_request') }}" method="post">
+
+  <label for="title">Title:</label>
+  <input type="text" name="title" maxlength=40>
+  <br>
+  <br>
+  <label for="description">Description:</label>
+  <br>
+  <br>
+  <textarea name="description" rows=20 cols=50></textarea>
+  <br>
+  <br>
+  <label for="client">Client:</label>
+  <select name="client" id="client" onchange="updatePriors();">
+    <option disabled selected value>select an option</option>
+    {% for id, name in clients %}
+    <option value={{ id }}>{{ name }}</option>
+    {% endfor %}
+  </select>
+  <br>
+  <br>
+  <label for="priority">Priority:</label>
+  <select name="priority" id="priority">
+    <option disabled selected value>first select a client</opition>
+  </select>
+  <br>
+  <br>
+  <label for="date">Target date:</label>
+  <input type="date" name="date">
+  <br>
+  <br>
+  <label for="area">Product area:</label>
+  <select name="area">
+    <option value="policies">Policies</option>
+    <option value="billing">Billing</option>
+    <option value="claims">Claims</option>
+    <option value="reports">Reports</option>
+  </select>
+  <br>
+  <br>
+  <input type="submit" value="Create Request">
+
+</form>
+{% endblock %}
